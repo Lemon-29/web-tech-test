@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <h1>！！！！！！experiment！！！！！！！</h1>
+    <% require 'pg' %>
+      <% connection = PG::connect(dbname: "goya") %>
+      <% connection.internal_encoding = "UTF-8" %>
+      <% result = connection.exec("SELECT * FROM crops WHERE NOT give_for = 'self-consumption';") %>
+      <% data = [] %>
+      <% result.each do |record| %>
+        <%  data <<
+        "length:#{record["length"]} weight:#{record["weight"]} quality:#{record["quality"]} transferee:#{record["give_for"]} date:#{record["date"]}" %>
+      <% end %>
+      <form action="goya.cgi" method="POST">
+    when you click the botton below,transferee is NOT self-consumption <br><br>
+
+        <input type="text" name="goya1" value="<%= data.join(' ') %>">
+        <input type="submit" name="submit" >
+      </form>
+
+      <% result_false = connection.exec("SELECT * FROM crops WHERE quality = 'false';") %>
+      <% data_false = [] %>
+      <% result_false.each do |record_false| %>
+        <%  data_false <<
+        "length:#{record_false["length"]} weight:#{record_false["weight"]} transferee:#{record_false["give_for"]} date:#{record_false["date"]}" %>
+      <% end %>
+      <form action="goya.cgi" method="POST">
+    when you click the botton, it shouws goya information of poor quality<br><br>
+
+        <input type="text" name="goya_false" value="<%= data_false.join(' ') %>">
+        <input type="submit" name="submit" >
+      </form>
+    </body>
+  </html>
