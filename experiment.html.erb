@@ -10,23 +10,21 @@
       <% result = connection.exec("SELECT * FROM crops WHERE NOT give_for = 'self-consumption';") %>
       <% data = [] %>
       <% result.each do |record| %>
-        <%  data <<
-        "length:#{record["length"]} weight:#{record["weight"]} quality:#{record["quality"]} transferee:#{record["give_for"]} date:#{record["date"]}" %>
+        <%  data << "length:#{record["length"]} weight:#{record["weight"]} quality:#{record["quality"]} transferee:#{record["give_for"]} date:#{record["date"]}" %>
       <% end %>
-      <form action="goya.cgi" method="POST">
+      <form action="goya2.cgi" method="POST">
     when you click the botton below,transferee is NOT self-consumption <br><br>
 
-        <input type="text" name="goya1" value="<%= data.join(' ') %>">
+        <input type="text" name="goya2" value="<%= data.join(' ') %>">
         <input type="submit" name="submit" >
       </form>
 
       <% result_false = connection.exec("SELECT * FROM crops WHERE quality = 'false';") %>
       <% data_false = [] %>
       <% result_false.each do |record_false| %>
-        <%  data_false <<
-        "length:#{record_false["length"]} weight:#{record_false["weight"]} transferee:#{record_false["give_for"]} date:#{record_false["date"]}" %>
+        <%  data_false << "length:#{record_false["length"]} weight:#{record_false["weight"]} transferee:#{record_false["give_for"]} date:#{record_false["date"]}" %>
       <% end %>
-      <form action="goya.cgi" method="POST">
+      <form action="goya_false.cgi" method="POST">
     when you click the botton, it shouws goya information of poor quality<br><br>
 
         <input type="text" name="goya_false" value="<%= data_false.join(' ') %>">

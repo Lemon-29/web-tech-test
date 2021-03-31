@@ -12,7 +12,7 @@ begin
   # 取り出した各行を処理する
   result.each do |record|
       # 各行を取り出し、putsでターミナル上に出力する
-      puts "ゴーヤの大きさ：#{record["weight"]}　売った相手：#{record["give_for"]}"
+      puts "size of goya：#{record["weight"]}　ppl who got goya：#{record["give_for"]}"
   end
 ensure
   # 最後に.finishでデータベースへのコネクションを切断する
